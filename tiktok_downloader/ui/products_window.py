@@ -9,6 +9,7 @@ are generated once every name is in, and only then are Copy and Shopee switched 
 from __future__ import annotations
 
 import webbrowser
+from datetime import date, timedelta
 from typing import Callable
 
 import customtkinter as ctk
@@ -16,6 +17,7 @@ import customtkinter as ctk
 from ..links import shorten
 from ..models import QueueItem, Status
 from ..products.shopee import search_url
+from ..products.subid import date_prefix
 from . import theme
 from .widgets import Eyebrow, GhostButton, PrimaryButton, TextButton
 
@@ -66,7 +68,8 @@ class Step(ctk.CTkFrame):
 class ProductsWindow(ctk.CTkToplevel):
     def __init__(self, master, *, get_items: Callable[[], list[QueueItem]], on_scan: Action,
                  on_connect: Action, is_connected: Callable[[], bool], is_scanning: Callable[[], bool],
-                 code: ctk.StringVar, on_code_changed: Action):
+                 code: ctk.StringVar, on_code_changed: Action,
+                 date: ctk.StringVar, on_date_changed: Action):
         super().__init__(master)
         self.title("Sub IDs")
         self.geometry("880x700")
@@ -76,6 +79,8 @@ class ProductsWindow(ctk.CTkToplevel):
         self._is_connected = is_connected
         self._is_scanning = is_scanning
         self._code = code
+        self._date = date
+        self._on_date_changed = on_date_changed
         self._rows: dict[int, SubIdRow] = {}
         self._status_text = ""
         self.grid_columnconfigure(0, weight=1)
@@ -111,9 +116,16 @@ class ProductsWindow(ctk.CTkToplevel):
         self._live = ctk.CTkLabel(card, text="", font=theme.font(12), text_color=theme.TEXT_MUTED, anchor="w")
         self._live.pack(fill="x", padx=18, pady=(6, 14))
 
-        # --- code
+        # --- date + code
         options = ctk.CTkFrame(self, fg_color="transparent")
         options.grid(row=2, column=0, sticky="ew", padx=24, pady=12)
+        Eyebrow(options, "Date").pack(side="left", padx=(0, 8))
+        date_entry = ctk.CTkEntry(options, textvariable=date, width=80, height=30, fg_color=theme.SURFACE,
+                                  border_color=theme.BORDER_STRONG, text_color=theme.TEXT, font=theme.mono(12))
+        date_entry.pack(side="left")
+        date_entry.bind("<KeyRelease>", lambda _e: on_date_changed())
+        TextButton(options, "Today", lambda: self._set_date(0)).pack(side="left", padx=(4, 0))
+        TextButton(options, "Tomorrow", lambda: self._set_date(1)).pack(side="left", padx=(0, 18))
         Eyebrow(options, "Code").pack(side="left", padx=(0, 8))
         entry = ctk.CTkEntry(options, textvariable=code, width=70, height=30, fg_color=theme.SURFACE,
                              border_color=theme.BORDER_STRONG, text_color=theme.TEXT, font=theme.mono(12))
@@ -220,8 +232,12 @@ class ProductsWindow(ctk.CTkToplevel):
         self._connect.configure(text="Gemini connected ✓" if connected else "Connect Gemini",
                                 text_color=theme.ACCENT_TEXT if connected else theme.TEXT_MUTED)
         code = "".join(ch for ch in self._code.get() if ch.isalnum())
-        self._example.configure(text=f"e.g. NOV11{code}ledflashlight  ·  repeats get 1, 2…  ·  "
-                                     "click a sub ID to edit it")
+        day = "".join(ch for ch in self._date.get() if ch.isalnum()).upper() or date_prefix()
+        self._example.configure(text=f"e.g. {day}{code}ledflashlight  ·  repeats get 1, 2…")
+
+    def _set_date(self, days_ahead: int) -> None:
+        self._date.set(date_prefix(date.today() + timedelta(days=days_ahead)))
+        self._on_date_changed()
 
     def copy(self, text: str, note: str) -> None:
         self.clipboard_clear()

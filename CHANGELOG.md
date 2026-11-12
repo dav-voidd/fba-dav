@@ -1,5 +1,10 @@
 # 📝 Changelog
 
+## v4.2.0
+
+- 📅 **Sub ID date is editable:** type any date (`NOV13`, `DEC25`) or use **Today** / **Tomorrow**
+- ⬆️ **One-click updates:** when a new version is released, click **Update now** and the app updates and restarts itself
+
 ## v4.1.0 · First public release 🎉
 
 **⬇️ [Download TikTok Downloader.exe](https://github.com/dav-voidd/tiktok-downloader/releases/latest)**

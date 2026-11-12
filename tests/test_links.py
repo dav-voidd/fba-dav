@@ -30,3 +30,10 @@ def test_offline_detection():
     assert not looks_offline("Video unavailable")
 
 
+
+
+def test_update_version_compare():
+    from tiktok_downloader.updates import parse_version
+    assert parse_version("v4.3.0") > parse_version("4.2.0")
+    assert parse_version("v4.2.0") == parse_version("4.2.0")
+    assert parse_version("v4.10.0") > parse_version("v4.9.9")

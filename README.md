@@ -31,6 +31,7 @@ Bulk, in order, no watermark, no ads.
 | 🏷️ **Sub ID generator** | `NOV12ICspicesstorage1`: one click copies them all |
 | 🛒 **Shopee links** | Opens a Shopee search for each product, best sellers first |
 | 🖼️ **Slideshows** | Photo posts are saved as a folder of images |
+| ⬆️ **Auto-update** | One click installs the newest release and restarts |
 
 ## 🚀 Quick start
 

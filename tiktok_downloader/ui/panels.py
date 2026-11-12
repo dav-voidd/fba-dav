@@ -39,7 +39,20 @@ class TopBar(ctk.CTkFrame):
 
         self._stats = ctk.CTkLabel(self, font=theme.font(12), text_color=theme.TEXT_MUTED)
         self._stats.pack(side="right")
+        self._update: ctk.CTkButton | None = None
         self.set_stats(0, 0, 0)
+
+    def show_update(self, text: str, on_click: Action | None = None) -> None:
+        """An accent pill next to the title, e.g. '⬆ v4.3.0 available, Update now'."""
+        if self._update is None:
+            self._update = ctk.CTkButton(
+                self, text=text, command=on_click, height=28, corner_radius=14,
+                fg_color=theme.ACCENT, hover_color=theme.ACCENT_HOVER, text_color="#FFFFFF",
+                text_color_disabled="#FFFFFF", font=theme.font(12, "bold"))
+            self._update.pack(side="left", padx=(12, 0))
+        self._update.configure(text=text, state="normal" if on_click else "disabled")
+        if on_click:
+            self._update.configure(command=on_click)
 
     def set_stats(self, total: int, done: int, failed: int) -> None:
         parts = [f"{total} queued", f"{done} saved"] + ([f"{failed} failed"] if failed else [])
