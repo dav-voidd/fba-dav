@@ -55,6 +55,32 @@ NOV12  +  IC  +  spicesstorage  +  1
 date      code   product (2 words)  repeat #
 ```
 
+## ❓ FAQ
+
+<details>
+<summary>Is it free?</summary>
+
+Yes. The app is free and has no ads. The Gemini key is free too (no credit card).
+</details>
+
+<details>
+<summary>A video failed to download?</summary>
+
+Press **Retry failed**. Private or deleted videos can't be downloaded.
+</details>
+
+<details>
+<summary>The scan is slow or says "busy"?</summary>
+
+Google's free Gemini servers get busy sometimes. The app switches models and retries on its own, so just wait.
+</details>
+
+<details>
+<summary>Can I change the sub ID?</summary>
+
+Yes. Click any sub ID in the **🛍 Sub IDs** window to edit it, or change the `IC` code at the top.
+</details>
+
 ## 🧱 Built with
 
 [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) · [tikwm](https://www.tikwm.com) · [yt-dlp](https://github.com/yt-dlp/yt-dlp) · [Gemini API](https://ai.google.dev)
