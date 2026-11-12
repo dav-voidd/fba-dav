@@ -22,8 +22,26 @@ def ensure_dependencies() -> None:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-U", *missing])
 
 
-if __name__ == "__main__":
+def main() -> None:
     ensure_dependencies()
-    from tiktok_downloader.ui.app import run
+    from tiktok_downloader.errors import LOG_PATH, install_crash_handlers, log_exception
 
-    run()
+    install_crash_handlers()
+    try:
+        from tiktok_downloader.ui.app import run
+        run()
+    except Exception as exc:  # last line of defence: explain instead of vanishing
+        log_exception(exc, "fatal")
+        try:
+            from tkinter import Tk, messagebox
+            root = Tk()
+            root.withdraw()
+            messagebox.showerror("TikTok Downloader",
+                                 f"Something went wrong and the app has to close.\n\n"
+                                 f"Details were saved to:\n{LOG_PATH}")
+        except Exception:
+            pass
+
+
+if __name__ == "__main__":
+    main()

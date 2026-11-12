@@ -11,7 +11,7 @@ import threading
 import time
 from pathlib import Path
 from typing import Callable
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 from urllib.request import Request, urlopen
 
 from .models import Post
@@ -83,7 +83,14 @@ def _absolute(url: str | None) -> str | None:
 
 # ------------------------------------------------------------------ HTTP helpers
 
+MAX_DOWNLOAD_BYTES = 1024 * 1024 * 1024  # 1 GB: no TikTok is near this
+
+
 def _request(url: str) -> Request:
+    # Only web links. urllib can also open file:// and ftp:// URLs, and a bad answer
+    # from the download service must never make us read files from this PC.
+    if urlsplit(url).scheme not in ("https", "http"):
+        raise ApiError("Refused a link that isn't a web address.")
     return Request(url, headers={"User-Agent": USER_AGENT})
 
 
@@ -93,6 +100,7 @@ def get_bytes(url: str, timeout: float = 20) -> bytes:
         from curl_cffi import requests as browser
     except ImportError:
         browser = None
+    _request(url)  # validates the scheme
     if browser is not None:
         response = browser.get(url, impersonate="chrome", timeout=timeout)
         response.raise_for_status()
@@ -118,9 +126,13 @@ def download_file(url: str, destination: Path,
                 raise ApiError(f"Expected {expect}, got '{content_type or 'unknown'}'")
             total = int(response.headers.get("Content-Length") or 0)
             received = 0
+            if total > MAX_DOWNLOAD_BYTES:
+                raise ApiError("This file is too large to be a TikTok video.")
             while chunk := response.read(_CHUNK):
                 out.write(chunk)
                 received += len(chunk)
+                if received > MAX_DOWNLOAD_BYTES:
+                    raise ApiError("This file is too large to be a TikTok video.")
                 if total and on_progress:
                     on_progress(received / total)
         partial.replace(destination)

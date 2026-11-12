@@ -7,6 +7,8 @@ import os
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+from .protect import protect, unprotect
+
 
 def _config_dir() -> Path:
     base = os.environ.get("APPDATA") or Path.home() / ".config"
@@ -32,13 +34,19 @@ class Settings:
         try:
             data = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
             known = {k: v for k, v in data.items() if k in cls.__dataclass_fields__}
-            return cls(**known)
+            settings = cls(**known)
+            settings.gemini_api_key = unprotect(str(settings.gemini_api_key or ""))
+            return settings
         except (OSError, ValueError, TypeError):
             return cls()
 
     def save(self) -> None:
         try:
             CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
-            CONFIG_PATH.write_text(json.dumps(asdict(self), indent=2), encoding="utf-8")
+            data = asdict(self)
+            data["gemini_api_key"] = protect(self.gemini_api_key)  # never stored in plain text
+            temp = CONFIG_PATH.with_suffix(".tmp")
+            temp.write_text(json.dumps(data, indent=2), encoding="utf-8")
+            temp.replace(CONFIG_PATH)  # atomic: a crash mid-save can't corrupt settings
         except OSError:
             pass  # settings are a convenience; never crash over them
