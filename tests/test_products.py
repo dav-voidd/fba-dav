@@ -56,3 +56,11 @@ def test_shopee_search_sorted_by_sales():
     from tiktok_downloader.products.shopee import search_url
     url = search_url("tissue box holder")
     assert url == "https://shopee.ph/search?keyword=tissue+box+holder&sortBy=sales"
+
+
+def test_custom_date_prefix():
+    items = [_item(1, "led flashlight")]
+    assign_subids(items, "IC", NOV11, prefix="nov13")
+    assert items[0].product.sub_id == "NOV13ICledflashlight"
+    assign_subids(items, "IC", NOV11, prefix="")
+    assert items[0].product.sub_id == "NOV11ICledflashlight"

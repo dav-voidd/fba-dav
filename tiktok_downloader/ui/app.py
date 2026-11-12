@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import queue
 import threading
+import webbrowser
 from tkinter import TclError, filedialog, messagebox
 from typing import Callable
 
@@ -17,11 +18,12 @@ from ..errors import LOG_PATH, log_exception
 from ..links import extract_links
 from ..models import Quality, QueueItem, Status
 from ..network import NO_INTERNET, has_internet
+from .. import updates
 from ..products.scanner import Scanner
 from . import theme
 from .panels import Composer, QueuePanel, StatusBar, TopBar
 from .preview import PreviewCard, open_path
-from ..products.subid import assign_subids
+from ..products.subid import assign_subids, date_prefix
 from .ai_setup import AISetup
 from .products_window import ProductsWindow
 
@@ -53,9 +55,11 @@ class App(ctk.CTk):
         self._ai_setup: AISetup | None = None
         self._offered_setup = False
         self.subid_code = ctk.StringVar(value=self.settings.subid_code)
+        self.subid_date = ctk.StringVar(value=date_prefix())  # starts as today every launch
 
         self._build_layout()
         self.after(_POLL_MS, self._drain_ui_tasks)
+        threading.Thread(target=self._check_for_update, daemon=True).start()
         self.protocol("WM_DELETE_WINDOW", self._on_close)
 
     # ---------------------------------------------------------------- layout
@@ -219,6 +223,7 @@ class App(ctk.CTk):
             on_connect=lambda: self.set_api_key(), is_connected=lambda: bool(self.settings.gemini_api_key),
             is_scanning=lambda: self.scanner.is_running,
             code=self.subid_code, on_code_changed=self._code_changed,
+            date=self.subid_date, on_date_changed=self._refresh_subids,
         )
 
     def _code_changed(self) -> None:
@@ -229,7 +234,7 @@ class App(ctk.CTk):
     def _refresh_subids(self) -> None:
         """Generate every sub ID at once, after all names are in, so 1, 2 numbering is final."""
         if not self.scanner.is_running:
-            assign_subids(self.items, self.settings.subid_code)
+            assign_subids(self.items, self.settings.subid_code, prefix=self.subid_date.get())
         for item in self.items:
             if item.product:
                 self.queue.refresh(item)
@@ -348,6 +353,44 @@ class App(ctk.CTk):
             self.scan_products(automatic=True)  # anything not yet queued while downloading
 
     # -------------------------------------------------------------- helpers
+
+    def _check_for_update(self) -> None:
+        release = updates.newer_release()
+        if release:
+            label = "Update now" if updates.can_self_update(release) else "Download"
+            self.call_soon(lambda: self.topbar.show_update(
+                f"⬆  {release.version} available · {label}", lambda: self._update_app(release)))
+
+    def _update_app(self, release: "updates.Release") -> None:
+        if not updates.can_self_update(release):
+            webbrowser.open(release.page_url)  # running from source: get it from GitHub
+            return
+        if self.downloader.is_running or self.scanner.is_running:
+            self.statusbar.set_status("Finish or stop the current download/scan before updating.")
+            return
+
+        def progress(fraction: float) -> None:
+            self.call_soon(lambda: self.topbar.show_update(f"Downloading update  {int(fraction * 100)}%"))
+
+        def work() -> None:
+            try:
+                new_exe = updates.download_update(release, progress)
+            except Exception as exc:
+                log_exception(exc, "self-update")
+                self.call_soon(lambda: (
+                    self.topbar.show_update(f"⬆  {release.version} · Retry update", lambda: self._update_app(release)),
+                    self.statusbar.set_status("Update failed. Check your internet and try again.", error=True)))
+                return
+            self.call_soon(lambda: self._restart_into(new_exe))
+
+        self.topbar.show_update("Downloading update…")
+        threading.Thread(target=work, daemon=True).start()
+
+    def _restart_into(self, new_exe) -> None:
+        self.topbar.show_update("Restarting…")
+        self._save_settings()
+        updates.install_and_restart(new_exe)
+        self.after(300, lambda: os._exit(0))
 
     def call_soon(self, task: Callable[[], None]) -> None:
         """Schedule ``task`` on the UI thread. Safe to call from any thread."""

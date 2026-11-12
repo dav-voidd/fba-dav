@@ -30,11 +30,14 @@ def clean_code(text: str) -> str:
 
 
 def make_subid(short_name: str, when: date | None = None, code: str = "IC",
-               number: int | None = None) -> str:
-    return date_prefix(when) + clean_code(code) + product_slug(short_name) + (str(number) if number else "")
+               number: int | None = None, prefix: str | None = None) -> str:
+    """``prefix`` overrides the date part, e.g. "NOV13" to prepare tomorrow's videos."""
+    start = clean_code(prefix).upper() if prefix and clean_code(prefix) else date_prefix(when)
+    return start + clean_code(code) + product_slug(short_name) + (str(number) if number else "")
 
 
-def assign_subids(items: Iterable[QueueItem], code: str = "IC", when: date | None = None) -> None:
+def assign_subids(items: Iterable[QueueItem], code: str = "IC", when: date | None = None,
+                  prefix: str | None = None) -> None:
     """Give every recognised item its sub ID, numbering repeated products 1, 2, 3…"""
     scanned = [item for item in items if item.product]
     counts: dict[str, int] = {}
@@ -48,4 +51,4 @@ def assign_subids(items: Iterable[QueueItem], code: str = "IC", when: date | Non
         if counts[slug] > 1:
             seen[slug] = seen.get(slug, 0) + 1
             number = seen[slug]
-        item.product.sub_id = make_subid(item.product.short_name, when, code, number)
+        item.product.sub_id = make_subid(item.product.short_name, when, code, number, prefix)
