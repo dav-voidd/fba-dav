@@ -1,90 +1,90 @@
+<div align="center">
+
 # 🎵 TikTok Downloader
 
-A clean, ad-free desktop app for downloading TikTok videos **in bulk**, **in order**, and **without the watermark**.
+**Paste 30 links → get 30 clean videos + ready-to-copy affiliate sub IDs.**
+Bulk, in order, no watermark, no ads.
 
-Paste 1 link or 100. The app queues them and downloads them one by one, in the order you pasted them.
+[![Release](https://img.shields.io/github/v/release/dav-voidd/tiktok-downloader?color=7C6CFF&label=release&style=for-the-badge)](https://github.com/dav-voidd/tiktok-downloader/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/dav-voidd/tiktok-downloader/total?color=25F4EE&style=for-the-badge)](https://github.com/dav-voidd/tiktok-downloader/releases)
+[![Tests](https://img.shields.io/github/actions/workflow/status/dav-voidd/tiktok-downloader/tests.yml?label=tests&style=for-the-badge)](https://github.com/dav-voidd/tiktok-downloader/actions/workflows/tests.yml)
 
-## Features
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6?logo=windows&logoColor=white)
+![Gemini](https://img.shields.io/badge/AI-Gemini-8E75B2?logo=googlegemini&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-FE2C55)
 
-- **Bulk paste:** drop in any amount of text and every TikTok link is detected automatically, including short `vt.` / `vm.` links.
-- **Ordered queue:** files are numbered `001_`, `002_`, … to match your paste order (this can be turned off).
-- **No watermark, two qualities:** *Balanced* (~4–5 MB H.264, plays everywhere) or *Max quality* (largest file TikTok has).
-- **Live preview:** animated thumbnail, caption and progress of the current video; click any row to preview it.
-- **Photo slideshows** are saved as a folder of images.
-- **Sub ID scanner (free, Gemini):** each video is uploaded to Gemini as soon as it downloads, then Gemini watches up to 10 videos per request (picture and sound), names each product and builds an affiliate sub ID like `NOV11ICspicesstorage1` (repeats are numbered). Copy one or all from the **🛍 Sub IDs** window, edit any of them by hand, or click **Shopee ↗** to open a Shopee search sorted by best sellers. Needs a free key from [Google AI Studio](https://aistudio.google.com/apikey).
-- **Live progress:** each video has its own progress bar and status, plus an overall progress bar.
-- **Duplicates skipped:** the same link pasted twice is only queued once.
-- **Stop / Retry failed:** stop after the current video, and retry only the links that failed.
-- **No ads, no tracking, no accounts.**
+### [⬇️ Download the app](https://github.com/dav-voidd/tiktok-downloader/releases/latest)
 
-## Quick start
+</div>
 
-Requires **Python 3.10+**.
+---
 
+## ✨ Features
+
+| | |
+|---|---|
+| 📥 **Bulk & ordered** | Paste any amount of links. Downloads one by one, numbered `001_`, `002_`… |
+| 🚫 **No watermark** | *Balanced* (H.264, plays everywhere) or *Max quality* |
+| 👀 **Live preview** | Animated thumbnail, caption and progress of each video |
+| 🤖 **AI product scan** | Gemini watches each video (picture + sound) and names the product |
+| 🏷️ **Sub ID generator** | `NOV12ICspicesstorage1`: one click copies them all |
+| 🛒 **Shopee links** | Opens a Shopee search for each product, best sellers first |
+| 🖼️ **Slideshows** | Photo posts are saved as a folder of images |
+
+## 🚀 Quick start
+
+**Just use it:** download the `.exe` from [Releases](https://github.com/dav-voidd/tiktok-downloader/releases/latest) and open it.
+> Windows may say *"protected your PC"*: click **More info → Run anyway**.
+
+**Run from code:**
 ```bash
-git clone https://github.com/<dav-voidd>/tiktok-downloader.git
+git clone https://github.com/dav-voidd/tiktok-downloader.git
 cd tiktok-downloader
-pip install -r requirements.txt
-python main.py
+python main.py        # installs what it needs on first run
 ```
 
-**VS Code:** open the folder and press **F5**. The dependencies install automatically on the first run.
+## 🏷️ Sub IDs in 3 steps
 
-## Build a standalone .exe (Windows)
-
-```bash
-build.bat
-```
-
-The app is created at `dist/TikTok Downloader.exe`.
-
-## Project structure
+1. 🔑 First scan opens **Connect Gemini**: get a free key at [AI Studio](https://aistudio.google.com/apikey) (no card).
+2. 📥 Download your videos. They're scanned automatically, 5 at a time.
+3. 📋 Open **🛍 Sub IDs** → **Copy all**.
 
 ```
-tiktok-downloader/
-├── main.py                     # entry point (+ first-run dependency install)
-├── tiktok_downloader/
-│   ├── __init__.py             # app name & version
-│   ├── models.py               # QueueItem, Status
-│   ├── links.py                # link detection from pasted text
-│   ├── config.py               # persisted user settings
-│   ├── tikwm.py                # tikwm.com API client (clean media URLs)
-│   ├── downloader.py           # download engine: tikwm first, yt-dlp fallback
-│   ├── network.py              # connectivity check, offline detection
-│   ├── errors.py               # error logging
-│   ├── products/               # sub ID scanner
-│   │   ├── gemini.py           # Gemini Files API upload + batch recognition
-│   │   ├── scanner.py          # uploads while downloading, 10 videos per request
-│   │   ├── subid.py            # sub ID generator (NOV11 + IC + product + #)
-│   │   ├── shopee.py           # Shopee search links (best sellers first)
-│   │   └── common.py           # shared result cleanup
-│   └── ui/
-│       ├── theme.py            # colors & fonts
-│       ├── widgets.py          # reusable styled widgets, QueueRow
-│       ├── panels.py           # TopBar, Composer, QueuePanel, StatusBar
-│       ├── preview.py          # animated preview card
-│       ├── products_window.py  # Sub IDs window: edit + copy
-│       ├── ai_setup.py         # guided "Connect Gemini" window
-│       └── app.py              # main window, wires UI <-> engine
-├── tests/                      # pytest unit tests
-├── build.bat                   # PyInstaller build script
-└── requirements.txt
+NOV12  +  IC  +  spicesstorage  +  1
+date      code   product (2 words)  repeat #
 ```
 
-The download engine has no dependency on the UI. It reports progress through a small `DownloadListener` interface, and the UI marshals those callbacks onto the Tk thread.
+## 🧱 Built with
 
-## Troubleshooting
+[CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) · [tikwm](https://www.tikwm.com) · [yt-dlp](https://github.com/yt-dlp/yt-dlp) · [Gemini API](https://ai.google.dev)
 
-If downloads start failing, TikTok has probably changed something. Press **⟳ Update download engine** in the app, or run `pip install -U yt-dlp`, then restart.
+<details>
+<summary>📁 Project structure</summary>
 
-## Disclaimer
+```
+main.py                    entry point
+tiktok_downloader/
+├── downloader.py          download engine (tikwm → yt-dlp fallback)
+├── tikwm.py · links.py · config.py · models.py · network.py · errors.py
+├── products/              gemini.py · scanner.py · subid.py · shopee.py
+└── ui/                    app.py · panels.py · preview.py · products_window.py · …
+tests/                     pytest
+```
+</details>
 
-This app is for personal use. Only download content you have the right to download, and respect creators and TikTok's Terms of Service.
+<details>
+<summary>🛠️ Build the .exe yourself</summary>
 
-## Credits
+Double-click `build.bat` → `dist/TikTok Downloader.exe`
+</details>
 
-Built with [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) and [yt-dlp](https://github.com/yt-dlp/yt-dlp).
+---
 
-## License
+<div align="center">
 
-[MIT](LICENSE)
+⚠️ For personal use. Respect creators and TikTok's Terms of Service.
+
+Made with 💜 by [dabid](https://github.com/dav-voidd) · [MIT License](LICENSE)
+
+</div>
