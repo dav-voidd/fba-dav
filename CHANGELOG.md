@@ -1,5 +1,13 @@
 # 📝 Changelog
 
+## v4.3.0 · Security
+
+- 🔐 Gemini key is **encrypted** with Windows DPAPI (only your Windows account can read it)
+- ✅ Updates are **verified** before installing: GitHub-only, SHA-256 fingerprint, real Windows app
+- 🌐 Only web links are ever opened; downloads are size-capped
+- 📝 Error log hides API keys and stays under 1 MB
+- 💥 Crashes are caught and logged, with a friendly message instead of the app vanishing
+
 ## v4.2.0
 
 - 📅 **Sub ID date is editable:** type any date (`NOV13`, `DEC25`) or use **Today** / **Tomorrow**

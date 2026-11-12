@@ -8,6 +8,7 @@ script waits for the app to close, swaps the files and starts the new version.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -17,6 +18,7 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
+from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 from . import __version__
@@ -26,6 +28,9 @@ LATEST_API = f"https://api.github.com/repos/{REPO}/releases/latest"
 RELEASES_PAGE = f"https://github.com/{REPO}/releases/latest"
 FROZEN = getattr(sys, "frozen", False)
 _CHUNK = 256 * 1024
+MAX_UPDATE_BYTES = 300 * 1024 * 1024
+# Release files are only ever served from GitHub. Anything else is refused.
+TRUSTED_HOSTS = ("github.com", "objects.githubusercontent.com", "release-assets.githubusercontent.com")
 
 
 @dataclass
@@ -33,6 +38,7 @@ class Release:
     version: str            # e.g. "v4.3.0"
     page_url: str
     exe_url: str | None     # the attached .exe, if any
+    sha256_url: str | None  # its published SHA-256 fingerprint (.sha256 file)
 
 
 def parse_version(text: str) -> tuple[int, ...]:
@@ -49,40 +55,74 @@ def newer_release(current: str = __version__) -> Release | None:
         tag = str(data.get("tag_name", ""))
         if parse_version(tag) <= parse_version(current):
             return None
-        exe = next((a.get("browser_download_url") for a in data.get("assets", [])
-                    if str(a.get("name", "")).lower().endswith(".exe")), None)
-        return Release(tag, data.get("html_url") or RELEASES_PAGE, exe)
+        assets = {str(a.get("name", "")).lower(): a.get("browser_download_url") for a in data.get("assets", [])}
+        exe = next((url for name, url in assets.items() if name.endswith(".exe")), None)
+        checksum = next((url for name, url in assets.items() if name.endswith(".sha256")), None)
+        return Release(tag, data.get("html_url") or RELEASES_PAGE, exe, checksum)
     except Exception:
         return None  # offline, rate-limited, no releases yet: no notice
 
 
 def can_self_update(release: Release) -> bool:
-    return FROZEN and sys.platform == "win32" and bool(release.exe_url)
+    """Only when the release has both the .exe and its fingerprint, served by GitHub.
+    Otherwise the user is sent to the release page to download it themselves."""
+    return (FROZEN and sys.platform == "win32"
+            and _trusted(release.exe_url) and _trusted(release.sha256_url))
+
+
+def _trusted(url: str | None) -> bool:
+    if not url:
+        return False
+    parts = urlsplit(url)
+    return parts.scheme == "https" and parts.hostname in TRUSTED_HOSTS
+
+
+def _get(url: str, timeout: float):
+    if not _trusted(url):
+        raise RuntimeError("Refused an update from outside GitHub.")
+    return urlopen(Request(url, headers={"User-Agent": "TikTokDownloader"}), timeout=timeout)
 
 
 def download_update(release: Release, on_progress: Callable[[float], None]) -> Path:
-    """Download the new .exe next to the running one. Returns its path."""
+    """Download the new .exe next to the running one and verify it before use."""
+    with _get(release.sha256_url, 20) as response:
+        expected = (re.findall(r"\b[0-9a-fA-F]{64}\b", response.read().decode("utf-8", "ignore")) or [""])[0].lower()
+    if not expected:
+        raise RuntimeError("The update has no valid fingerprint.")
+
     current = Path(sys.executable)
     target = current.with_name(current.stem + ".new.exe")
-    request = Request(release.exe_url, headers={"User-Agent": "TikTokDownloader"})
-    with urlopen(request, timeout=60) as response, open(target, "wb") as out:
-        total = int(response.headers.get("Content-Length") or 0)
-        done = 0
-        while chunk := response.read(_CHUNK):
-            out.write(chunk)
-            done += len(chunk)
-            if total:
-                on_progress(done / total)
-    if target.stat().st_size < 1_000_000:  # sanity check: a real build is many MB
+    digest = hashlib.sha256()
+    try:
+        with _get(release.exe_url, 60) as response, open(target, "wb") as out:
+            total = int(response.headers.get("Content-Length") or 0)
+            if total > MAX_UPDATE_BYTES:
+                raise RuntimeError("The update file is unexpectedly large.")
+            done = 0
+            while chunk := response.read(_CHUNK):
+                out.write(chunk)
+                digest.update(chunk)
+                done += len(chunk)
+                if done > MAX_UPDATE_BYTES:
+                    raise RuntimeError("The update file is unexpectedly large.")
+                if total:
+                    on_progress(done / total)
+        with open(target, "rb") as check:
+            is_program = check.read(2) == b"MZ"  # every Windows .exe starts with "MZ"
+        if not is_program or digest.hexdigest() != expected:
+            raise RuntimeError("The update failed its safety check and was not installed.")
+        return target
+    except Exception:
         target.unlink(missing_ok=True)
-        raise RuntimeError("The downloaded update looks incomplete. Try again.")
-    return target
+        raise
 
 
 def install_and_restart(new_exe: Path) -> None:
     """Hand over to a helper script that swaps the .exe once this process exits."""
     current = Path(sys.executable)
-    script = Path(tempfile.gettempdir()) / "tiktok_downloader_update.bat"
+    handle, name = tempfile.mkstemp(prefix="tiktok_update_", suffix=".bat")  # unique, private
+    os.close(handle)
+    script = Path(name)
     script.write_text(
         "@echo off\r\n"
         ":wait\r\n"
