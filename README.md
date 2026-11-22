@@ -4,8 +4,10 @@
 
 # fba-dav
 
-**Paste 30 links → get 30 clean videos + ready-to-copy affiliate sub IDs.**
-Bulk, in order, no watermark, no ads.
+### The all-in-one affiliate workflow: from TikTok link to posted Facebook Reel.
+
+**Download clean videos in order → let AI name the products → get ready-to-paste sub IDs → build your Excel sheet → auto-post Reels to your Page.**
+No watermark. No ads. Everything stays on your PC.
 
 [![Release](https://img.shields.io/github/v/release/dav-voidd/tiktok-downloader?color=C8102E&label=release&style=for-the-badge)](https://github.com/dav-voidd/tiktok-downloader/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/dav-voidd/tiktok-downloader/total?color=C8102E&style=for-the-badge)](https://github.com/dav-voidd/tiktok-downloader/releases)
@@ -22,19 +24,20 @@ Bulk, in order, no watermark, no ads.
 
 ---
 
-## ✨ Features
+## ✨ What it does
 
 | | |
 |---|---|
-| 📥 **Bulk & ordered** | Paste any amount of links. Downloads one by one, numbered `001_`, `002_`… |
-| 🚫 **No watermark** | *Balanced* (H.264, plays everywhere) or *Max quality* |
-| 👀 **Live preview** | Animated thumbnail, caption and progress of each video |
-| 🤖 **AI product scan** | Gemini watches each video (picture + sound) and names the product |
-| 🏷️ **Sub ID generator** | `NOV12ICspicesstorage1`: one click copies them all |
-| 🛒 **Shopee links** | Opens a Shopee search for each product, best sellers first |
+| 📥 **Bulk TikTok downloader** | Paste any number of links; saved one by one as `001_`, `002_`… with no watermark (Balanced or Max quality) |
+| ☁️ **Google Drive downloader** | Grab a whole public Drive folder, numbered and continuing from your last video |
+| 🤖 **AI product scan** | Gemini watches each video (picture + sound) and names the product; scan any folder of `.mp4` files too |
+| 🏷️ **Sub ID generator** | `NOV14ICtumbler1DAILYMART`: date + code + product + repeat number + optional shop tag, one click to copy all |
+| 📊 **Excel export** | Builds the sheet in your boss's layout, with clickable links |
+| 📘 **Facebook Reels poster** | Posts your videos to your Page in order with caption and link comment, paced to stay within Meta's limits |
+| 🔗 **Post ID & Reel link collector** | Gets every post ID (`pageid_postid`) or Reel link for a day, filterable by shop, matched to your Excel |
+| ✅ **Link checker** | Verifies posts are live and fixes video IDs into real post IDs |
 | 🖼️ **Slideshows** | Photo posts are saved as a folder of images |
-| ⬆️ **Auto-update** | One click installs the newest release, verified by SHA-256 |
-| 🔐 **Private** | Your Gemini key is encrypted on your PC and never leaves it except to Google |
+| 🔐 **Private** | Gemini key and Facebook token are encrypted on your PC |
 
 ## 🚀 Quick start
 
