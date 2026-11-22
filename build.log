@@ -1,0 +1,134 @@
+Requirement already satisfied: pyinstaller in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (6.22.3)
+Requirement already satisfied: customtkinter>=5.2 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from -r requirements.txt (line 1)) (6.0.0)
+Requirement already satisfied: pillow>=10.0 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from -r requirements.txt (line 2)) (13.0.0)
+Requirement already satisfied: yt-dlp>=2024.1.0 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from -r requirements.txt (line 3)) (2026.10.26)
+Requirement already satisfied: curl_cffi>=0.7 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from -r requirements.txt (line 4)) (0.17.0)
+Requirement already satisfied: altgraph in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from pyinstaller) (0.17.5)
+Requirement already satisfied: packaging>=22.0 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from pyinstaller) (26.2)
+Requirement already satisfied: pefile>=2022.5.30 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from pyinstaller) (2024.8.26)
+Requirement already satisfied: pyinstaller-hooks-contrib>=2026.7 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from pyinstaller) (2026.10)
+Requirement already satisfied: pywin32-ctypes>=0.2.1 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from pyinstaller) (0.2.3)
+Requirement already satisfied: setuptools>=42.0.0 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from pyinstaller) (65.5.0)
+Requirement already satisfied: darkdetect in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from customtkinter>=5.2->-r requirements.txt (line 1)) (0.8.0)
+Requirement already satisfied: cffi>=2.1.1 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from curl_cffi>=0.7->-r requirements.txt (line 4)) (2.1.1)
+Requirement already satisfied: certifi>=2026.10.19 in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from curl_cffi>=0.7->-r requirements.txt (line 4)) (2026.10.23)
+Requirement already satisfied: pycparser in C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages (from cffi>=2.1.1->curl_cffi>=0.7->-r requirements.txt (line 4)) (3.0)
+623 INFO: PyInstaller: 6.22.3, contrib hooks: 2026.10
+623 INFO: Python: 3.11.9
+650 INFO: Platform: Windows-10-10.0.26200-SP0
+650 INFO: Python environment: C:\Users\acerp\AppData\Local\Programs\Python\Python311
+650 INFO: wrote C:\Users\acerp\Documents\tiktok-downloader-v4.10.0\TikTok Downloader.spec
+650 INFO: Removing temporary files and cleaning cache in C:\Users\acerp\AppData\Local\pyinstaller
+4510 INFO: Module search paths (PYTHONPATH):
+['C:\\Users\\acerp\\Documents\\tiktok-downloader-v4.10.0',
+ 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\python311.zip',
+ 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\DLLs',
+ 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib',
+ 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311',
+ 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages',
+ 'C:\\Users\\acerp\\Documents\\tiktok-downloader-v4.10.0']
+8819 INFO: Appending 'datas' from .spec
+8819 INFO: checking Analysis
+8819 INFO: Building Analysis because Analysis-00.toc is non existent
+8819 INFO: Looking for Python shared library...
+8819 INFO: Using Python shared library: C:\Users\acerp\AppData\Local\Programs\Python\Python311\python311.dll
+8819 INFO: Running Analysis Analysis-00.toc
+8819 INFO: Target bytecode optimization level: 0
+8819 INFO: Initializing module dependency graph...
+8819 INFO: Initializing module graph hook caches...
+9135 INFO: Analyzing modules for base_library.zip ...
+12052 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+12364 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+18718 INFO: Processing standard module hook 'hook-math.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+19109 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+29628 INFO: Caching module dependency graph...
+29723 INFO: Analyzing C:\Users\acerp\Documents\tiktok-downloader-v4.10.0\main.py
+30113 INFO: Processing standard module hook 'hook-_ctypes.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+30357 INFO: Processing standard module hook 'hook-webbrowser.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+30453 INFO: Processing pre-find-module-path hook 'hook-tkinter.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+30461 INFO: TclTkInfo: initializing cached Tcl/Tk info...
+31324 INFO: Processing standard module hook 'hook-_tkinter.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+31602 INFO: Processing standard module hook 'hook-customtkinter.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+31906 INFO: Processing standard module hook 'hook-platform.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+31913 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+31923 INFO: SetuptoolsInfo: initializing cached setuptools info...
+34116 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+35747 INFO: Processing standard module hook 'hook-PIL.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+36045 INFO: Processing standard module hook 'hook-PIL.Image.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+37003 INFO: Processing standard module hook 'hook-numpy.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+40435 INFO: Processing standard module hook 'hook-difflib.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+41473 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+42119 INFO: Processing standard module hook 'hook-xml.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+46817 INFO: Processing standard module hook 'hook-sysconfig.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+54987 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+57016 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+57985 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+60858 INFO: Processing standard module hook 'hook-certifi.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+62808 INFO: Processing standard module hook 'hook-yt_dlp.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\yt_dlp\\__pyinstaller'
+361 WARNING: Failed to collect submodules for 'urllib3.contrib.emscripten' because importing 'urllib3.contrib.emscripten' raised: ModuleNotFoundError: No module named 'js'
+65536 WARNING: collect_data_files - skipping data collection for module 'yt_dlp_ejs' as it is not a package.
+66898 INFO: Processing standard module hook 'hook-sqlite3.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+67964 INFO: Processing standard module hook 'hook-urllib3.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+68588 INFO: Processing pre-safe-import-module hook 'hook-backports.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+123665 INFO: Analyzing hidden import 'yt_dlp.__main__'
+123682 INFO: Analyzing hidden import 'yt_dlp.__pyinstaller'
+123697 INFO: Analyzing hidden import 'yt_dlp.__pyinstaller.hook-yt_dlp'
+123924 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+124074 INFO: Processing standard module hook 'hook-win32ctypes.core.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+125610 INFO: Processing standard module hook 'hook-pycparser.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+125976 INFO: Processing standard module hook 'hook-setuptools.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+126001 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+126002 INFO: Processing pre-find-module-path hook 'hook-distutils.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+126806 INFO: Processing standard module hook 'hook-distutils.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+126962 INFO: Processing standard module hook 'hook-distutils.util.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+127053 INFO: Processing standard module hook 'hook-_osx_support.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+127632 INFO: Processing standard module hook 'hook-pkg_resources.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+132497 INFO: Analyzing hidden import 'yt_dlp.compat._deprecated'
+132520 INFO: Analyzing hidden import 'yt_dlp.compat._legacy'
+132593 INFO: Analyzing hidden import 'yt_dlp.utils._deprecated'
+132617 INFO: Analyzing hidden import 'yt_dlp.utils._legacy'
+132660 INFO: Processing module hooks (post-graph stage)...
+132722 WARNING: Hidden import "pycparser.lextab" not found!
+132722 WARNING: Hidden import "pycparser.yacctab" not found!
+133967 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+134322 INFO: Processing pre-safe-import-module hook 'hook-win32com.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\pre_safe_import_module'
+137025 INFO: Processing standard module hook 'hook-setuptools._vendor.importlib_metadata.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+137382 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+140876 INFO: Processing standard module hook 'hook-_tkinter.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks'
+140914 INFO: Performing binary vs. data reclassification (939 entries)
+156069 INFO: Looking for ctypes DLLs
+156086 WARNING: Ignoring AppKit.framework/AppKit imported from C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages\darkdetect\_mac_detect.py - only basenames are supported with ctypes imports!
+156345 INFO: Analyzing run-time hooks ...
+156352 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+156365 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+156369 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+156384 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+156384 INFO: Including run-time hook 'pyi_rth_pkgres.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+156416 INFO: Including run-time hook 'pyi_rth__tkinter.py' from 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+156494 INFO: Creating base_library.zip...
+156527 INFO: Looking for dynamic libraries
+158339 INFO: Extra DLL search directories (AddDllDirectory): ['C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\curl_cffi.libs', 'C:\\Users\\acerp\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\numpy.libs']
+158339 INFO: Extra DLL search directories (PATH): []
+158931 INFO: Warnings written to C:\Users\acerp\Documents\tiktok-downloader-v4.10.0\build\TikTok Downloader\warn-TikTok Downloader.txt
+159090 INFO: Graph cross-reference written to C:\Users\acerp\Documents\tiktok-downloader-v4.10.0\build\TikTok Downloader\xref-TikTok Downloader.html
+159216 INFO: checking PYZ
+159216 INFO: Building PYZ because PYZ-00.toc is non existent
+159216 INFO: Building PYZ (ZlibArchive) C:\Users\acerp\Documents\tiktok-downloader-v4.10.0\build\TikTok Downloader\PYZ-00.pyz
+160402 INFO: Building PYZ (ZlibArchive) C:\Users\acerp\Documents\tiktok-downloader-v4.10.0\build\TikTok Downloader\PYZ-00.pyz completed successfully.
+160450 INFO: checking PKG
+160450 INFO: Building PKG because PKG-00.toc is non existent
+160450 INFO: Building PKG (CArchive) TikTok Downloader.pkg
+168158 INFO: Building PKG (CArchive) TikTok Downloader.pkg completed successfully.
+168175 INFO: Bootloader C:\Users\acerp\AppData\Local\Programs\Python\Python311\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+168175 INFO: checking EXE
+168175 INFO: Building EXE because EXE-00.toc is non existent
+168175 INFO: Building EXE from EXE-00.toc
+168175 INFO: Copying bootloader EXE to C:\Users\acerp\Documents\tiktok-downloader-v4.10.0\dist\TikTok Downloader.exe
+168324 INFO: Copying icon to EXE
+168427 INFO: Copying 0 resources to EXE
+168427 INFO: Embedding manifest in EXE
+168524 INFO: Appending PKG archive to EXE
+168733 INFO: Fixing EXE headers
+169550 INFO: Building EXE from EXE-00.toc completed successfully.
+169566 INFO: Build complete! The results are available in: C:\Users\acerp\Documents\tiktok-downloader-v4.10.0\dist
+Adding imports: ['yt_dlp.compat._legacy', 'yt_dlp.compat._deprecated', 'yt_dlp.utils._legacy', 'yt_dlp.utils._deprecated', 'Cryptodome', 'requests', 'requests.__version__', 'requests._internal_utils', 'requests._types', 'requests.adapters', 'requests.api', 'requests.auth', 'requests.certs', 'requests.compat', 'requests.cookies', 'requests.exceptions', 'requests.help', 'requests.hooks', 'requests.models', 'requests.packages', 'requests.sessions', 'requests.status_codes', 'requests.structures', 'requests.utils', 'urllib3', 'urllib3._base_connection', 'urllib3._collections', 'urllib3._request_methods', 'urllib3._version', 'urllib3.connection', 'urllib3.connectionpool', 'urllib3.contrib', 'urllib3.contrib.pyopenssl', 'urllib3.contrib.socks', 'urllib3.exceptions', 'urllib3.fields', 'urllib3.filepost', 'urllib3.http2', 'urllib3.http2.connection', 'urllib3.http2.probe', 'urllib3.poolmanager', 'urllib3.response', 'urllib3.util', 'urllib3.util.connection', 'urllib3.util.proxy', 'urllib3.util.request', 'urllib3.util.response', 'urllib3.util.retry', 'urllib3.util.ssl_', 'urllib3.util.ssl_match_hostname', 'urllib3.util.ssltransport', 'urllib3.util.timeout', 'urllib3.util.url', 'urllib3.util.util', 'urllib3.util.wait', 'mutagen', 'brotli', 'certifi', 'secretstorage', 'curl_cffi']
